@@ -15,4 +15,8 @@ Style and content image:
 </p>
 
 Output image:
+<p align = "center">
+<img src="https://github.com/consciousgaze/ImageSytleTransfer/blob/master/full_moon_output.jpg" width="65%"/>
+</p>
+
 
