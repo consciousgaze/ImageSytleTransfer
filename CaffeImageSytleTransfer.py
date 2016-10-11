@@ -1,8 +1,9 @@
 #/usr/bin/env python
-import sys, caffe, argparse, pickle, math, os, logging, subprocess
+import sys, caffe, argparse, pickle, math, os, logging
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
+from util import getVGGCaffeWeights
 
 # the model is vgg19 in caffe model zoo
 MODEL_FILE = "models/model.prototxt"
@@ -14,7 +15,6 @@ WEIGHTS = { 'conv5_1' : 0.1,
             'conv3_1' : 0.2,
             'conv2_1' : 0.3,
             'conv1_1' : 0.3 }
-get_model = 'curl http://www.robots.ox.ac.uk/~vgg/software/very_deep/caffe/VGG_ILSVRC_19_layers.caffemodel -o ' + MODEL_WEIGHT
 
 def parseArg():
     parser = argparse.ArgumentParser(description='Take style and content image')
@@ -198,8 +198,7 @@ if __name__ == '__main__':
                            This example script is supposed to be run in the root directory.""")
     if not os.path.isfile(MODEL_WEIGHT):
         print "Trained weight file for vgg19 not found. Downloading..."
-        p = subprocess.Popen(get_model.split(), stdout = subprocess.PIPE)
-        p.wait()
+        getVGGCaffeWeights()
     converter = ImageStyleConverter(arg.style, arg.content, arg.max_iter,
                                     arg.max_size, arg.out_file)
     converter.run()
